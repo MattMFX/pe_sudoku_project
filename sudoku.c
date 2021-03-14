@@ -60,9 +60,11 @@ void transforma_arquivo_para_matriz(){
 Função main
 ==================================================================================================================================*/
 int main(){
-    setlocale(LC_ALL, "Portuguese_Brasil");
 
+<<<<<<< HEAD
     transforma_arquivo_para_matriz();
     imprime_sudoku();
 
+=======
+>>>>>>> master
 }
