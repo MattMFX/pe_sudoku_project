@@ -23,7 +23,7 @@ void imprime_sudoku(){
 }
 
 /*==================================================================================================================================
-Função que recebe um array de char (string), com o nome do arquivo csv a ser lido e insere as informações em uma matriz (variável 
+Função lê um array de char (string), com o nome do arquivo csv a ser lido e insere as informações em uma matriz (variável 
 global 'int sudoku[][]') que será o sudoku.
 ==================================================================================================================================*/
 void transforma_arquivo_para_matriz(){
@@ -51,10 +51,12 @@ void transforma_arquivo_para_matriz(){
     fclose(arquivo);
 }
     
-
+/*==================================================================================================================================
+Função main
+==================================================================================================================================*/
 int main(){
     setlocale(LC_ALL, "Portuguese_Brasil");
-    printf("teste é á ã ç");
+
     imprime_sudoku();
     transforma_arquivo_para_matriz();
 
