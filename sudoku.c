@@ -4,19 +4,24 @@
 int sudoku[4][4];
 
 /*==================================================================================================================================
-WIP
+Função que imprime o sudoku
 ==================================================================================================================================*/
 void imprime_sudoku(){
     
-    int x=1;
-    while(x<=2){
-        printf("-------------\n");
-        int y=1;
-        while(y<=2){
-            printf("| 0 0 | 0 0 |\n");    
-            y++;
+    printf("-------------\n");
+
+    for(int i=0; i<4; i++){
+        if(i==2){
+            printf("|-----|-----|\n");
         }
-        x++;
+        printf("| ");
+        for(int j=0; j<4; j++){
+            printf("%i ", sudoku[i][j]);
+            if(j==1){
+                printf("| ");
+            }
+        }
+        printf("|\n");
     }
 
     printf("-------------\n");
@@ -57,13 +62,7 @@ Função main
 int main(){
     setlocale(LC_ALL, "Portuguese_Brasil");
 
-    imprime_sudoku();
     transforma_arquivo_para_matriz();
+    imprime_sudoku();
 
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++){
-            printf("%i ", sudoku[i][j]);
-        }
-        printf("\n");
-    }
 }
