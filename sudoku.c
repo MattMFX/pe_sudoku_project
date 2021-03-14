@@ -55,15 +55,5 @@ void transforma_arquivo_para_matriz(){
 Função main
 ==================================================================================================================================*/
 int main(){
-    setlocale(LC_ALL, "Portuguese_Brasil");
 
-    imprime_sudoku();
-    transforma_arquivo_para_matriz();
-
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++){
-            printf("%i ", sudoku[i][j]);
-        }
-        printf("\n");
-    }
 }
