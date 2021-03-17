@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <locale.h>
+#include <stdbool.h>
 
-int sudoku[4][4];
+int sudoku[4][4][5];
+bool resolvido = false;
 
 /*==================================================================================================================================
 Função que imprime o sudoku
@@ -16,7 +18,7 @@ void imprime_sudoku(){
         }
         printf("| ");
         for(int j=0; j<4; j++){
-            printf("%i ", sudoku[i][j]);
+            printf("%i ", sudoku[i][j][0]);
             if(j==1){
                 printf("| ");
             }
@@ -46,10 +48,10 @@ void transforma_arquivo_para_matriz(){
     int x=0;
     int a,b,c,d;
     while(fscanf(arquivo, "%i,%i,%i,%i", &a, &b, &c, &d)!=EOF){
-        sudoku[x][0] = a;
-        sudoku[x][1] = b;
-        sudoku[x][2] = c;
-        sudoku[x][3] = d;
+        sudoku[x][0][0] = a;
+        sudoku[x][1][0] = b;
+        sudoku[x][2][0] = c;
+        sudoku[x][3][0] = d;
         x++;
     }
 
@@ -63,5 +65,50 @@ int main(){
 
     transforma_arquivo_para_matriz();
     imprime_sudoku();
+    
+    //resolve_sudoku();
 
+    //imprime_sudoku();
 }
+
+
+    /*
+    resolve_sudoku(){
+        while(resolvido==false){
+            valores_possiveis();
+            atribui_valor();
+        }
+    }
+    */
+
+    /*
+    void valores_possiveis(){
+        for(int i=0; i<4; i++){
+            for(int j=0; j<4; j++){
+
+                if(sudoku[i][j][0] !=0){
+                    for(int k=0; k<4; k++){
+                        sudoku[i][j][k]=0;
+                    }
+                }else{
+                    ---------------
+                }
+
+            }
+            
+        }
+    }
+    */
+
+        
+
+    /*
+    void atribui_valor(){
+        for(){
+            for(){
+
+            }
+        }
+            
+    }
+    */
