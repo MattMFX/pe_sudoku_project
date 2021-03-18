@@ -9,7 +9,7 @@ bool resolvido = false;
 Função que imprime o sudoku
 ==================================================================================================================================*/
 void imprime_sudoku(){
-    
+
     printf("-------------\n");
 
     for(int i=0; i<4; i++){
@@ -30,7 +30,7 @@ void imprime_sudoku(){
 }
 
 /*==================================================================================================================================
-Função lê um array de char (string), com o nome do arquivo csv a ser lido e insere as informações em uma matriz (variável 
+Função lê um array de char (string), com o nome do arquivo csv a ser lido e insere as informações em uma matriz (variável
 global 'int sudoku[][]') que será o sudoku.
 ==================================================================================================================================*/
 void transforma_arquivo_para_matriz(){
@@ -57,7 +57,48 @@ void transforma_arquivo_para_matriz(){
 
     fclose(arquivo);
 }
-    
+/*==================================================================================================================================
+Atribui valor para cade celula com apenas uma possibilidade
+==================================================================================================================================*/
+
+void atribui_valor(){
+
+    int i, j, k, verificador, aux;
+
+    for(i=0; i<4; i++){
+        for(j=0; j<4; j++){
+            if(sudoku[i][j][0]==0){
+                verificador = 0;
+                    for(k=1; k<=5; k++){
+                        if(sudoku[i][j][k]!=0){
+                            verificador = verificador + 1;
+                            aux = sudoku[i][j][k];
+                        }
+                    }
+            }
+            if(verificador==1){
+                sudoku[i][j][0] = aux;
+            }
+            aux = 0;
+        }
+    }
+
+    aux = 0;
+    for(i=0; i<4; i++){
+        for(j=0; j<4; j++){
+            if(sudoku[i][j][0]==0){
+                aux = 1;
+                break;
+                resolve sudoku();
+            }
+        }
+    }
+
+    if(aux==0){
+        imprime_sudoku();
+    }
+}
+
 /*==================================================================================================================================
 Função main
 ==================================================================================================================================*/
@@ -65,7 +106,7 @@ int main(){
 
     transforma_arquivo_para_matriz();
     imprime_sudoku();
-    
+
     //resolve_sudoku();
 
     //imprime_sudoku();
@@ -95,20 +136,8 @@ int main(){
                 }
 
             }
-            
+
         }
     }
     */
 
-        
-
-    /*
-    void atribui_valor(){
-        for(){
-            for(){
-
-            }
-        }
-            
-    }
-    */
