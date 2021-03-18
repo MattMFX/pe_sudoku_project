@@ -2,8 +2,15 @@
 #include <locale.h>
 #include <stdbool.h>
 
+void main();
+void imprime_sudoku();
+void transforma_arquivo_para_matriz();
+bool sudoku_foi_resolvido();
+void atribui_valores();
+void resolve_sudoku();
+
+int tamanho_sudoku=4;
 int sudoku[4][4][5];
-bool resolvido = false;
 
 /*==================================================================================================================================
 Função que imprime o sudoku
@@ -12,12 +19,12 @@ void imprime_sudoku(){
 
     printf("-------------\n");
 
-    for(int i=0; i<4; i++){
+    for(int i=0; i<tamanho_sudoku; i++){
         if(i==2){
             printf("|-----|-----|\n");
         }
         printf("| ");
-        for(int j=0; j<4; j++){
+        for(int j=0; j<tamanho_sudoku; j++){
             printf("%i ", sudoku[i][j][0]);
             if(j==1){
                 printf("| ");
@@ -57,78 +64,89 @@ void transforma_arquivo_para_matriz(){
 
     fclose(arquivo);
 }
+
+
 /*==================================================================================================================================
-Atribui valor para cade celula com apenas uma possibilidade
+Função que verifica se o sudoku foi resolvido, caso sim, retorna o valor true. Se não retorna o valor false  
 ==================================================================================================================================*/
-
-void atribui_valor(){
-
-    int i, j, k, verificador, aux;
-
-    for(i=0; i<4; i++){
-        for(j=0; j<4; j++){
+bool sudoku_foi_resolvido(){
+    for(int i=0; i<tamanho_sudoku; i++){
+        for(int j=0; j<tamanho_sudoku; j++){
             if(sudoku[i][j][0]==0){
-                verificador = 0;
-                    for(k=1; k<=5; k++){
-                        if(sudoku[i][j][k]!=0){
-                            verificador = verificador + 1;
-                            aux = sudoku[i][j][k];
-                        }
-                    }
+                return false;
             }
+        }
+    }
+    return true;
+}
+
+/*==================================================================================================================================
+Atribui valor para cada celula com apenas uma possibilidade
+==================================================================================================================================*/
+void atribui_valores(){
+
+    int verificador, aux;
+    bool fez_substituicao = false;
+
+    for(int i=0; i<tamanho_sudoku; i++){
+        for(int j=0; j<tamanho_sudoku; j++){
+            verificador = 0;
+            aux = 0;
+            int k=1;
+            while(sudoku[i][j][k]!=0){
+                verificador++;
+                aux=sudoku[i][j][k];
+                k++;
+            }    
+                    
             if(verificador==1){
                 sudoku[i][j][0] = aux;
-            }
-            aux = 0;
-        }
-    }
-
-    aux = 0;
-    for(i=0; i<4; i++){
-        for(j=0; j<4; j++){
-            if(sudoku[i][j][0]==0){
-                aux = 1;
-                break;
-                resolve sudoku();
+                sudoku[i][j][1] = 0;
+                fez_substituicao=true;
             }
         }
     }
 
-    if(aux==0){
-        imprime_sudoku();
+    if(!fez_substituicao && !sudoku_foi_resolvido()){
+        printf("Este sudoku é muito dificil, por favor insira outro\n");
+        main();
     }
+}
+
+/*==================================================================================================================================
+Função que faz as devidas chamadas para resolver o sudoku
+==================================================================================================================================*/
+void resolve_sudoku(){
+        valores_possiveis();
+        atribui_valores();
+        if(!sudoku_foi_resolvido()){
+            resolve_sudoku();
+        }
 }
 
 /*==================================================================================================================================
 Função main
 ==================================================================================================================================*/
-int main(){
+void main(){
 
     transforma_arquivo_para_matriz();
+
+    printf("Sudoku inserido antes de ser resolvido:\n");
     imprime_sudoku();
 
-    //resolve_sudoku();
+    resolve_sudoku();
 
-    //imprime_sudoku();
+    printf("Sudoku resolvido:\n");
+    imprime_sudoku();
 }
-
-
-    /*
-    resolve_sudoku(){
-        while(resolvido==false){
-            valores_possiveis();
-            atribui_valor();
-        }
-    }
-    */
 
     /*
     void valores_possiveis(){
-        for(int i=0; i<4; i++){
-            for(int j=0; j<4; j++){
+        for(int i=0; i<tamanho_sudoku; i++){
+            for(int j=0; j<tamanho_sudoku; j++){
 
                 if(sudoku[i][j][0] !=0){
-                    for(int k=0; k<4; k++){
+                    for(int k=0; k<tamanho_sudoku; k++){
                         sudoku[i][j][k]=0;
                     }
                 }else{
