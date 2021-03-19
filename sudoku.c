@@ -11,31 +11,31 @@ void resolve_sudoku();
 void valores_possiveis();
 void zera_valores_possiveis();
 
-int tamanho_sudoku=4;
-int sudoku[4][4][5];
+int tamanho_sudoku=9;
+int sudoku[9][9][10];
 
 /*==================================================================================================================================
 Função que imprime o sudoku
 ==================================================================================================================================*/
 void imprime_sudoku(){
 
-    printf("-------------\n");
+    printf("-------------------------\n");
 
     for(int i=0; i<tamanho_sudoku; i++){
-        if(i==2){
-            printf("|-----|-----|\n");
+        if(i==3 || i==6){
+            printf("|-------|-------|-------|\n");
         }
         printf("| ");
         for(int j=0; j<tamanho_sudoku; j++){
             printf("%i ", sudoku[i][j][0]);
-            if(j==1){
+            if(j==2 || j==5){
                 printf("| ");
             }
         }
         printf("|\n");
     }
 
-    printf("-------------\n");
+    printf("-------------------------\n");
 }
 
 /*==================================================================================================================================
@@ -55,12 +55,17 @@ void transforma_arquivo_para_matriz(){
     }
 
     int x=0;
-    int a,b,c,d;
-    while(fscanf(arquivo, "%i,%i,%i,%i", &a, &b, &c, &d)!=EOF){
+    int a,b,c,d,e,f,g,h,i;
+    while(fscanf(arquivo, "%i,%i,%i,%i,%i,%i,%i,%i,%i", &a, &b, &c, &d, &e, &f, &g, &h, &i)!=EOF){
         sudoku[x][0][0] = a;
         sudoku[x][1][0] = b;
         sudoku[x][2][0] = c;
         sudoku[x][3][0] = d;
+        sudoku[x][4][0] = e;
+        sudoku[x][5][0] = f;
+        sudoku[x][6][0] = g;
+        sudoku[x][7][0] = h;
+        sudoku[x][8][0] = i;
         x++;
     }
 
@@ -110,7 +115,7 @@ void atribui_valores(){
     }
 
     if(!fez_substituicao && !sudoku_foi_resolvido()){
-        printf("Este sudoku é muito dificil, por favor insira outro\n");
+        printf("Muito difícil!! Esse foi o mais longe que cheguei:\n");
         imprime_sudoku();
         main();
     }
@@ -132,8 +137,8 @@ void resolve_sudoku(){
 Função que zera os valores possiveis na matriz
 ==================================================================================================================================*/
 void zera_valores_possiveis(){
-    for(int i =0; i<4;i++){
-        for(int j =0; j<4;j++){
+    for(int i =0; i<tamanho_sudoku;i++){
+        for(int j =0; j<tamanho_sudoku;j++){
             for(int k = 1;k<5;k++){
                 sudoku[i][j][k]=0;
                 
@@ -149,15 +154,15 @@ void valores_possiveis(){
     int valor=1;
     int k=1;
     int indicador=0;
-    for(int i =0; i<4;i++){
-        for(int j =0; j<4;j++){
+    for(int i =0; i<9;i++){
+        for(int j =0; j<9;j++){
             if(sudoku[i][j][0]==0){
-                    /*Percorre quadrado*/
-                if(i<=1 && j<=1){
-                    while(valor<5){
+                    /*Percorre primeiro quadrado*/
+                if(i<=2 && j<=2){
+                    while(valor<10){
                         indicador=0;
-                        for(int linha=0; linha<2;linha++){
-                            for(int coluna=0;coluna<2;coluna++){
+                        for(int linha=0; linha<3;linha++){
+                            for(int coluna=0;coluna<3;coluna++){
                                 if(sudoku[linha][coluna][0]== valor){
                                     indicador=1;
                                 }
@@ -165,13 +170,13 @@ void valores_possiveis(){
                         }
 
                         /*Percorre Linha*/
-                        for(int aux=0; aux<4;aux++){
+                        for(int aux=0; aux<9;aux++){
                             if(sudoku[aux][j][0]== valor){
                                 indicador = 1;
                             }
                         }
                         /*Percorre Coluna*/
-                        for(int contador=0; contador<4;contador++){
+                        for(int contador=0; contador<9;contador++){
                             if(sudoku[i][contador][0]== valor){
                                 indicador = 1;
                             }
@@ -186,14 +191,14 @@ void valores_possiveis(){
 
                     /* Percorre segundo quadrado*/
 
-                else if(i<=1 && (j<4 && j>=2)){
+                else if(i<=2 && (j<6 && j>2)){
 
                         /*Percorre quadrado*/
 
-                    while(valor<5){
+                    while(valor<10){
                         indicador =0;
-                        for(int linha=0; linha<2;linha++){
-                            for(int coluna=2;coluna<4;coluna++){
+                        for(int linha=0; linha<3;linha++){
+                            for(int coluna=3;coluna<6;coluna++){
                                 if(sudoku[linha][coluna][0]== valor){
                                     indicador=1;
                                 }
@@ -202,14 +207,14 @@ void valores_possiveis(){
 
                         /*Percorre Linha*/
 
-                        for(int aux=0; aux<4;aux++){
+                        for(int aux=0; aux<9;aux++){
                             if(sudoku[aux][j][0]== valor){
                                 indicador = 1;
                             }
                         }
                         /*Percorre Coluna*/
 
-                        for(int contador=0; contador<4;contador++){
+                        for(int contador=0; contador<9;contador++){
                             if(sudoku[i][contador][0]== valor){
                                 indicador = 1;
                             }
@@ -224,12 +229,12 @@ void valores_possiveis(){
 
                     /*Percorrer terceiro quadrado*/
 
-                else if((i>=2 && i<4) && j<=1){
+                else if((i<=2) && (j>5 && j<9)){
                     
-                    while(valor<5){
+                    while(valor<10){
                         indicador =0;
-                        for(int linha=2; linha<4;linha++){
-                            for(int coluna=0;coluna<2;coluna++){
+                        for(int linha=0; linha<3;linha++){
+                            for(int coluna=6;coluna<9;coluna++){
                                 if(sudoku[linha][coluna][0]== valor){
                                     indicador=1;
                                 }
@@ -237,7 +242,7 @@ void valores_possiveis(){
                         }
 
                         /*Percorre Linha*/
-                        for(int aux=0; aux<4;aux++){
+                        for(int aux=0; aux<9;aux++){
                             if(sudoku[aux][j][0]== valor){
                                 indicador = 1;
                             }
@@ -245,7 +250,7 @@ void valores_possiveis(){
 
                         /*Percorre Coluna*/
 
-                        for(int contador=0; contador<4;contador++){
+                        for(int contador=0; contador<9;contador++){
                             if(sudoku[i][contador][0]== valor){
                                 indicador = 1;
                             }
@@ -260,12 +265,12 @@ void valores_possiveis(){
 
                     /*Percorre quarto quadrado*/
 
-                else if((i>=2 && i<4) && (j>=2 && j<4)){
+                else if((i>2 && i<6) && (j>=0 && j<3)){
                     
-                    while(valor<5){
+                    while(valor<10){
                         indicador =0;
-                        for(int linha=2; linha<4;linha++){
-                            for(int coluna=2;coluna<4;coluna++){
+                        for(int linha=3; linha<6;linha++){
+                            for(int coluna=0;coluna<3;coluna++){
                                 if(sudoku[linha][coluna][0]== valor){
                                     indicador=1;
                                 }
@@ -274,7 +279,7 @@ void valores_possiveis(){
 
                         /*Percorre Linha*/
 
-                        for(int aux=0; aux<4;aux++){
+                        for(int aux=0; aux<9;aux++){
                             if(sudoku[aux][j][0]== valor){
                                 indicador = 1;
                             }
@@ -282,7 +287,7 @@ void valores_possiveis(){
 
                         /*Percorre Coluna*/
 
-                        for(int contador=0; contador<4;contador++){
+                        for(int contador=0; contador<9;contador++){
                             if(sudoku[i][contador][0]== valor){
                                 indicador = 1;
                             }
@@ -294,6 +299,192 @@ void valores_possiveis(){
                         valor++;
                     }
                 }
+
+                    /*Percorre quinto quadrado*/
+
+                else if((i>2 && i<6) && (j>=3 && j<6)){
+                    
+                    while(valor<10){
+                        indicador =0;
+                        for(int linha=3; linha<6;linha++){
+                            for(int coluna=3;coluna<6;coluna++){
+                                if(sudoku[linha][coluna][0]== valor){
+                                    indicador=1;
+                                }
+                            }
+                        }
+
+                        /*Percorre Linha*/
+
+                        for(int aux=0; aux<9;aux++){
+                            if(sudoku[aux][j][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+
+                        /*Percorre Coluna*/
+
+                        for(int contador=0; contador<9;contador++){
+                            if(sudoku[i][contador][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+                        if(indicador!=1){
+                            sudoku[i][j][k]=valor;
+                            k++;
+                        }
+                        valor++;
+                    }
+                }
+
+                    /*Percorre sexto quadrado*/
+
+                else if((i>2 && i<6) && (j>=6 && j<9)){
+                    
+                    while(valor<10){
+                        indicador =0;
+                        for(int linha=3; linha<6;linha++){
+                            for(int coluna=6;coluna<9;coluna++){
+                                if(sudoku[linha][coluna][0]== valor){
+                                    indicador=1;
+                                }
+                            }
+                        }
+
+                        /*Percorre Linha*/
+
+                        for(int aux=0; aux<9;aux++){
+                            if(sudoku[aux][j][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+
+                        /*Percorre Coluna*/
+
+                        for(int contador=0; contador<9;contador++){
+                            if(sudoku[i][contador][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+                        if(indicador!=1){
+                            sudoku[i][j][k]=valor;
+                            k++;
+                        }
+                        valor++;
+                    }
+                }
+
+                    /*Percorre setimo quadrado*/
+
+                else if((i>5 && i<9) && (j>=0 && j<3)){
+                    
+                    while(valor<10){
+                        indicador =0;
+                        for(int linha=6; linha<9;linha++){
+                            for(int coluna=0;coluna<3;coluna++){
+                                if(sudoku[linha][coluna][0]== valor){
+                                    indicador=1;
+                                }
+                            }
+                        }
+
+                        /*Percorre Linha*/
+
+                        for(int aux=0; aux<9;aux++){
+                            if(sudoku[aux][j][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+
+                        /*Percorre Coluna*/
+
+                        for(int contador=0; contador<9;contador++){
+                            if(sudoku[i][contador][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+                        if(indicador!=1){
+                            sudoku[i][j][k]=valor;
+                            k++;
+                        }
+                        valor++;
+                    }
+                }
+                   
+                    /*Percorre oitavo quadrado*/
+
+                else if((i>5 && i<9) && (j>=3 && j<6)){
+                    
+                    while(valor<10){
+                        indicador =0;
+                        for(int linha=6; linha<9;linha++){
+                            for(int coluna=3;coluna<6;coluna++){
+                                if(sudoku[linha][coluna][0]== valor){
+                                    indicador=1;
+                                }
+                            }
+                        }
+
+                        /*Percorre Linha*/
+
+                        for(int aux=0; aux<9;aux++){
+                            if(sudoku[aux][j][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+
+                        /*Percorre Coluna*/
+
+                        for(int contador=0; contador<9;contador++){
+                            if(sudoku[i][contador][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+                        if(indicador!=1){
+                            sudoku[i][j][k]=valor;
+                            k++;
+                        }
+                        valor++;
+                    }
+                }
+
+                    /*Percorre nono quadrado*/
+
+                else if((i>5 && i<9) && (j>=6 && j<9)){
+                    
+                    while(valor<10){
+                        indicador =0;
+                        for(int linha=6; linha<9;linha++){
+                            for(int coluna=6;coluna<9;coluna++){
+                                if(sudoku[linha][coluna][0]== valor){
+                                    indicador=1;
+                                }
+                            }
+                        }
+
+                        /*Percorre Linha*/
+
+                        for(int aux=0; aux<9;aux++){
+                            if(sudoku[aux][j][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+
+                        /*Percorre Coluna*/
+
+                        for(int contador=0; contador<9;contador++){
+                            if(sudoku[i][contador][0]== valor){
+                                indicador = 1;
+                            }
+                        }
+                        if(indicador!=1){
+                            sudoku[i][j][k]=valor;
+                            k++;
+                        }
+                        valor++;
+                    }
+                }
+
 
             k=1;
             valor=1;
@@ -308,7 +499,7 @@ Função main
 ==================================================================================================================================*/
 void main(){
 
-    setlocale(LC_ALL, "portuguese_brazilian");
+    setlocale(LC_ALL, "Portuguese");
 
     transforma_arquivo_para_matriz();
 
@@ -317,6 +508,6 @@ void main(){
 
     resolve_sudoku();
 
-    printf("Sudoku resolvido:\n");
+    printf("\nSudoku resolvido:\n");
     imprime_sudoku();
 }
