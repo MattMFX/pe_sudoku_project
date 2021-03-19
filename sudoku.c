@@ -46,11 +46,11 @@ void transforma_arquivo_para_matriz(){
     FILE *arquivo;
 
     char nome_arquivo[50];
-    printf("\nDigite o nome do arquivo que será lido.");
+    printf("\nDigite o nome do arquivo que sera lido.");
     gets(nome_arquivo);
 
     if ((arquivo = fopen(nome_arquivo, "r")) == NULL) {
-        printf("\nNão existe tal arquivo, por favor digite outro.");
+        printf("\nNao existe tal arquivo, por favor digite outro.");
         transforma_arquivo_para_matriz();
     }
 
@@ -115,7 +115,7 @@ void atribui_valores(){
     }
 
     if(!fez_substituicao && !sudoku_foi_resolvido()){
-        printf("Muito difícil!! Esse foi o mais longe que cheguei:\n");
+        printf("Muito dificil!! Esse foi o mais longe que cheguei:\n");
         imprime_sudoku();
         main();
     }
