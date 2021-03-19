@@ -111,6 +111,7 @@ void atribui_valores(){
 
     if(!fez_substituicao && !sudoku_foi_resolvido()){
         printf("Este sudoku é muito dificil, por favor insira outro\n");
+        imprime_sudoku();
         main();
     }
 }
@@ -135,6 +136,7 @@ void zera_valores_possiveis(){
         for(int j =0; j<4;j++){
             for(int k = 1;k<5;k++){
                 sudoku[i][j][k]=0;
+                
             }
         }
     }
@@ -158,9 +160,9 @@ void valores_possiveis(){
                             for(int coluna=0;coluna<2;coluna++){
                                 if(sudoku[linha][coluna][0]== valor){
                                     indicador=1;
+                                }
                             }
                         }
-                    }
 
                         /*Percorre Linha*/
                         for(int aux=0; aux<4;aux++){
@@ -223,11 +225,9 @@ void valores_possiveis(){
                     /*Percorrer terceiro quadrado*/
 
                 else if((i>=2 && i<4) && j<=1){
-                    indicador =0;
+                    
                     while(valor<5){
-
-                        /*Percorre quadrado*/
-
+                        indicador =0;
                         for(int linha=2; linha<4;linha++){
                             for(int coluna=0;coluna<2;coluna++){
                                 if(sudoku[linha][coluna][0]== valor){
@@ -261,11 +261,9 @@ void valores_possiveis(){
                     /*Percorre quarto quadrado*/
 
                 else if((i>=2 && i<4) && (j>=2 && j<4)){
-                    indicador =0;
+                    
                     while(valor<5){
-
-                        /*Percorre quadrado*/
-
+                        indicador =0;
                         for(int linha=2; linha<4;linha++){
                             for(int coluna=2;coluna<4;coluna++){
                                 if(sudoku[linha][coluna][0]== valor){
@@ -309,6 +307,8 @@ void valores_possiveis(){
 Função main
 ==================================================================================================================================*/
 void main(){
+
+    setlocale(LC_ALL, "portuguese_brazilian");
 
     transforma_arquivo_para_matriz();
 
