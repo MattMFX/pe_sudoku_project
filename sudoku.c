@@ -13,6 +13,7 @@ void zera_valores_possiveis();
 
 int tamanho_sudoku=9;
 int sudoku[9][9][10];
+bool consegue_resolver =true;
 
 /*==================================================================================================================================
 Função que imprime o sudoku
@@ -72,6 +73,17 @@ void transforma_arquivo_para_matriz(){
     fclose(arquivo);
 }
 
+/*==================================================================================================================================
+Função que faz as devidas chamadas para resolver o sudoku
+==================================================================================================================================*/
+void resolve_sudoku(){
+    zera_valores_possiveis();
+    valores_possiveis();
+    atribui_valores();
+    if(!sudoku_foi_resolvido() && consegue_resolver){
+        resolve_sudoku();
+    }
+}
 
 /*==================================================================================================================================
 Função que verifica se o sudoku foi resolvido, caso sim, retorna o valor true. Se não retorna o valor false  
@@ -115,21 +127,9 @@ void atribui_valores(){
     }
 
     if(!fez_substituicao && !sudoku_foi_resolvido()){
+        consegue_resolver=false;
         printf("Muito dificil!! Esse foi o mais longe que cheguei:\n");
         imprime_sudoku();
-        main();
-    }
-}
-
-/*==================================================================================================================================
-Função que faz as devidas chamadas para resolver o sudoku
-==================================================================================================================================*/
-void resolve_sudoku(){
-    zera_valores_possiveis();
-    valores_possiveis();
-    atribui_valores();
-    if(!sudoku_foi_resolvido()){
-        resolve_sudoku();
     }
 }
 
@@ -498,9 +498,6 @@ void valores_possiveis(){
 Função main
 ==================================================================================================================================*/
 void main(){
-
-    setlocale(LC_ALL, "Portuguese");
-
     transforma_arquivo_para_matriz();
 
     printf("Sudoku inserido antes de ser resolvido:\n");
@@ -508,6 +505,8 @@ void main(){
 
     resolve_sudoku();
 
-    printf("\nSudoku resolvido:\n");
-    imprime_sudoku();
+    if(consegue_resolver){
+        printf("\nSudoku resolvido:\n");
+        imprime_sudoku();
+    }
 }
